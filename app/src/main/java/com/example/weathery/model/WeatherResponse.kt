@@ -2,7 +2,8 @@ package com.example.weathery.model
 
 data class WeatherResponse(
     val location: Location,
-    val current: Current
+    val current: Current,
+    val forecast: Forecast?
 )
 
 data class Location(
@@ -44,4 +45,18 @@ data class WeatherTileData(
     val iconUrl: String,
     val condition: String,
     val time: String
+)
+data class Forecast(
+    val forecastday: List<ForecastDay>
+)
+
+data class ForecastDay(
+    val date: String,
+    val hour: List<Hour>
+)
+
+data class Hour(
+    val time: String,
+    val temp_c: Double,
+    val condition: Condition
 )
