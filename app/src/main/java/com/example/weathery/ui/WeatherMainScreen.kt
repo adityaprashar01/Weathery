@@ -93,30 +93,52 @@ fun WeatherMainScreen(
                 .fillMaxSize()
         ) {
             // Search bar
-            OutlinedTextField(
-                value = query,
-                onValueChange = {
-                    query = it
-                    if (query.isEmpty()) vm.loadTopCities()
-                },
-                label = { Text("Search city…") },
-                singleLine = true,
-                modifier = Modifier
+            Row(
+                Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 18.dp)
-                    .background(Color(0xFF23253A), RoundedCornerShape(16.dp)),
-                colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color.Transparent,
-                    unfocusedBorderColor = Color.Transparent,
-                    focusedContainerColor = Color(0xFF23253A),
-                    unfocusedContainerColor = Color(0xFF23253A),
-                    focusedLabelColor = Color(0xFFB0B8C1),
-                    unfocusedLabelColor = Color(0xFFB0B8C1),
-                    cursorColor = Color.White,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White,
+                    .padding(horizontal = 18.dp, vertical = 12.dp)
+                    .height(54.dp)
+                    .background(Color(0xFF23253A), RoundedCornerShape(14.dp)),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextField(
+                    value = query,
+                    onValueChange = {
+                        query = it
+                        if (query.isEmpty()) vm.loadTopCities()
+                    },
+                    placeholder = { Text("Search", color = Color(0xFFB0B8C1)) },
+                    singleLine = true,
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = Color.White,
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                    ),
+                    textStyle = LocalTextStyle.current.copy(color = Color.White),
+                    shape = RoundedCornerShape(14.dp)
                 )
-            )
+
+                // "Cancel" text/button
+                if (query.isNotEmpty()) {
+                    TextButton(
+                        onClick = {
+                            query = ""
+                            vm.loadTopCities()
+                        },
+                        modifier = Modifier.padding(end = 8.dp)
+                    ) {
+                        Text("Cancel", color = Color(0xFFB0B8C1))
+                    }
+                }
+            }
+
 
             Spacer(Modifier.height(8.dp))
 
