@@ -1,18 +1,17 @@
 package com.example.weathery.data
 
 import com.example.weathery.Constants
-import com.example.weathery.model.SearchResult
 import com.example.weathery.model.WeatherResponse
 import com.example.weathery.model.WeatherTileData
 
 class WeatherRepository {
     private val api = RetrofitInstance.api
 
-    suspend fun searchCities(q: String): List<SearchResult> =
-        api.searchCities(Constants.API_KEY, q)
-
     suspend fun getCurrentWeather(q: String): WeatherResponse =
         api.getCurrentWeather(Constants.API_KEY, q)
+
+    suspend fun getForecastWeather(q: String): WeatherResponse =
+        api.getForecastWeather(Constants.API_KEY, q, days = 1)
 
     suspend fun getMultipleCitiesWeather(cities: List<String>): List<WeatherTileData> {
         return cities.mapNotNull { city ->
